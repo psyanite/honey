@@ -1,0 +1,14 @@
+
+    farmCategory("lunch", "https://www.zomato.com/sydney/lunch", None)
+    farmCategory("breakfast", "https://www.zomato.com/sydney/breakfast", None)
+    farmCategory("delivery", "https://www.zomato.com/sydney/delivery", None)
+    farmCategory("take-away", "https://www.zomato.com/sydney/take-away", None)
+    farmCategory("pubs-bars", "https://www.zomato.com/sydney/pubs-bars", None)
+    farmCategory("asian", "https://www.zomato.com/sydney/restaurants/asian", None)
+    farmCategory("italian", "https://www.zomato.com/sydney/restaurants/italian", None)
+    farmCategory("french", "https://www.zomato.com/sydney/restaurants/french", None)
+    farmCategory("japanese", "https://www.zomato.com/sydney/restaurants/japanese", None)
+    farmCategory("chinese", "https://www.zomato.com/sydney/restaurants/chinese", None)
+    farmCategory("desserts-bakes", "https://www.zomato.com/sydney/restaurants", Some("desserts-bakes=1"))
+    farmCategory("bubble-tea", "https://www.zomato.com/sydney/restaurants/bubble-tea", None)
+

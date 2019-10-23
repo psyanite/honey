@@ -1,9 +1,5 @@
 package honey
 
-import java.io.{BufferedWriter, File, FileWriter}
-
-import org.joda.time.LocalDateTime
-import org.joda.time.format._
 import org.jsoup.Jsoup
 import scalaj.http._
 
@@ -13,11 +9,8 @@ object Honey {
 
   def main(args: Array[String]): Unit = {
 
-    val fmt  = DateTimeFormat.forPattern("yyyy-MM-dd_HH:mm")
-    val time = fmt.print(new LocalDateTime())
-    val file = new File(s"src/main/resources/logs/$time.csv")
-    file.createNewFile()
-    val bw   = new BufferedWriter(new FileWriter(file))
+    val detailedFile = Utils.createFile("logs", "details")
+    val urlsFile = Utils.createFile("logs", "urls")
 
     def parse(zId: String): Unit = {
 
@@ -71,19 +64,19 @@ object Honey {
         }
       }
 
-      val address = Option(doc.select("div.resinfo-icon span").text()) getOrElse ""
-      val allParts = address.split(", ")
+      val address       = Option(doc.select("div.resinfo-icon span").text()) getOrElse ""
+      val allParts      = address.split(", ")
       val sydneyPartIdx = allParts.lastIndexWhere(_.startsWith("Sydney"))
       if (sydneyPartIdx < 0) throw new Exception(s"Could not find Sydney index: $address")
       val b = allParts.slice(0, sydneyPartIdx)
       if (b.length < 2) throw new Exception(s"Address has insufficient parts: $address")
       val suburb = b(b.length - 1)
 
-      val streetIdx = {
+      val streetIdx                  = {
         val kiwi = b.indexWhere(p => p.charAt(0).isDigit && hasValidSuffix(p))
         if (kiwi >= 0) kiwi else b.indexWhere(p => hasValidSuffix(p))
       }
-      val c = b.slice(0, streetIdx)
+      val c                          = b.slice(0, streetIdx)
       val (streetNumber, streetName) = {
         val sLine = b(streetIdx)
         if (sLine.charAt(0).isDigit) {
@@ -95,8 +88,8 @@ object Honey {
           ("null", sLine)
         }
       }
-      val line2 = if (c.length >= 1) b(1) else "null"
-      val line1 = if  (c.length >= 2) b(0) else "null"
+      val line2                      = if (c.length >= 1) b(1) else "null"
+      val line1                      = if (c.length >= 2) b(0) else "null"
 
       //  static Future<Map<String, dynamic>> get(String body, {Map<String, dynamic> variables}) async {
       //    var requestBody = json.encode({'query': body });
@@ -111,6 +104,35 @@ object Honey {
       //  }
 
       def a(s: String): String = if (s == "null") s else s""""$s""""
+
+      val mutation =
+        s"""
+           |mutation {
+           |  upsertStore(
+           |    zId: ${a(zId)},
+           |    zUrl: ${a(zUrl)},
+           |    name: ${a(name)},
+           |    phoneCountry: "+61",
+           |    phoneNumber: ${a(phone)},
+           |    coverImage: ${a(coverImage)},
+           |    addressFirstLine: ${a(line1)},
+           |    addressSecondLine: ${a(line2)},
+           |    addressStreetNumber: ${a(streetNumber)},
+           |    addressStreetName: ${a(streetName)},
+           |    cuisines: ${a(cuisines)},
+           |    location: null,
+           |    suburb: ${a(suburb)},
+           |    city: "Sydney",
+           |    lat: ${a(lat)},
+           |    lng: ${a(lng)},
+           |    moreInfo: ${a(moreInfo)},
+           |    avgCost: ${a(avgCost.toString)},
+           |    hours: ${a(hours.toString)}
+           |  ) {
+           |    id,
+           |    name,
+           |  }
+           |}""".stripMargin
 
 //      Http("http://localhost:3000/graphql")
 //          .postData(s"{ query: $mutation }")
@@ -127,10 +149,8 @@ object Honey {
         parse(zId)
       } catch {
         case e: Exception =>
-          println("==============")
-          println(s"https://www.zomato.com/sydney/$zId")
-          println(e)
-          println("==============")
+          detailedFile.write(s"$zId, https://www.zomato.com/sydney/$zId, , e\n")
+          urlsFile.write(s"$zId\n")
       }
     }
 
@@ -149,10 +169,21 @@ object Honey {
     processStore("umi-sushi-bar-haymarket")
     processStore("condor-japanese-restaurant-the-york-hotel-cbd")
 
-    bw.flush()
-    bw.close()
+    detailedFile.flush()
+    detailedFile.close()
+    urlsFile.flush()
+    urlsFile.flush()
 
-    println("============== DONE")
+    println(
+      """
+        |=================== DONE
+        |(\__/)   (\__/)  (\__/)
+        |(•ㅅ•)   (•ㅅ•)   (•ㅅ•)
+        |/ 　 づ  / 　 づ  / 　 づ
+        |=================== DONE
+        |""".stripMargin)
+
+
   }
 
   val ValidStreetSuffixes = "Road" ::
@@ -169,4 +200,21 @@ object Honey {
       Nil
 
   private def hasValidSuffix(s: String) = ValidStreetSuffixes.contains(s.split(" ").last)
+
+//  private def doGetPage(path: String, queryOpt: Option[String], pageNumber: Int): Option[JValue] = {
+//    val pageParam = s"page=$pageNumber"
+//    val queryStr = queryOpt.map(query => s"${query}&${pageParam}").getOrElse(pageParam)
+//    val url = buildUrl(s"${path}?${queryStr}")
+//    doGet(url)
+//  }
+//
+//  private def doGetAllPages(path: String, query: Option[String]): Seq[JValue] = {
+//    val firstPage = doGetPage(path, query , 1)
+//    val totalPageCount = firstPage.flatMap(p => (p \ "pagination" \ "number_of_pages").extractOpt[Int]).getOrElse(0)
+//    println(s"Fetching ${totalPageCount} pages for $path ${query.getOrElse("")}")
+//
+//    val remainderPages = (2 to totalPageCount).flatMap(pageNumber => doGetPage(path, query, pageNumber))
+//    firstPage.toSeq ++ remainderPages
+//  }
+
 }
