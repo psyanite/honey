@@ -1,0 +1,68 @@
+bangkok-bites-newtown:::https://www.zomato.com/sydney/bangkok-bites-newtown:::java.lang.ArrayIndexOutOfBoundsException: 1 Could not parse address: 273 King Street
+
+
+huong-huong-marrickville:::https://www.zomato.com/sydney/huong-huong-marrickville:::null Could not parse lat and lng from 
+
+
+ubud-kingsford:::https://www.zomato.com/sydney/ubud-kingsford:::java.lang.ArrayIndexOutOfBoundsException: 1 Could not parse address: 584 Anzac Parade
+
+
+memory-tongue-chatswood:::https://www.zomato.com/sydney/memory-tongue-chatswood:::java.lang.ArrayIndexOutOfBoundsException: -1 Could not parse address: Shop 66, Chatswood Interchange Chatswood, Chatswood, Sydney Chatswood NSW
+
+
+mamaks-village-darling-harbour:::https://www.zomato.com/sydney/mamaks-village-darling-harbour:::java.lang.ArrayIndexOutOfBoundsException: -1 Could not parse address: Level 2, Harbourside Shopping Centre, Darling Harbour, Sydney Darling Harbour NSW
+
+
+jiangnan-cbd:::https://www.zomato.com/sydney/jiangnan-cbd:::java.lang.Exception: Response had errors Toaster request failed: 
+
+mutation {
+  upsertStore(
+    zId: \"jiangnan-cbd\",
+    zUrl: \"https://www.zomato.com/sydney/jiangnan-cbd\",
+    name: \"Jiangnan 江南\",
+    phoneCountry: \"+61\",
+    phoneNumber: \"Not Available\",
+    coverImage: \"https://b.zmtcdn.com/data/reviews_photos/0e8/ae4d4d7be3399ffcaede1d61ddccf0e8_1567911947.jpg?resize=1204%3A1204&crop=1200%3A464%3B2%2C413\",
+    addressFirstLine: null,
+    addressSecondLine: null,
+    addressStreetNumber: \"57\",
+    addressStreetName: \"Liverpool Street\",
+    cuisines: \"Chinese,Asian\",
+    location: null,
+    suburb: \"CBD\",
+    city: \"Sydney\",
+    lat: -33.8763420000,
+    lng: 151.2051130000,
+    moreInfo: \"No Alcohol Available,Indoor Seating,Table Reservation Not Required,Parking available 274 metres away\",
+    avgCost: null,
+    hours: \"\"
+  ) {
+    id,
+    name,
+  }
+}, 
+
+Response: {
+  "errors": [
+    {
+      "message": "Could not upsert store: SequelizeDatabaseError: null value in column \"hours\" violates not-null constraint",
+      "locations": [
+        {
+          "line": 3,
+          "column": 3
+        }
+      ],
+      "path": [
+        "upsertStore"
+      ]
+    }
+  ],
+  "data": {
+    "upsertStore": null
+  }
+}
+
+
+banh-cuon-kim-thanh-bankstown:::https://www.zomato.com/sydney/banh-cuon-kim-thanh-bankstown:::java.lang.ArrayIndexOutOfBoundsException: -1 Could not parse address: Shop 7, 313 Chapel Road South, Bankstown, Sydney Bankstown
+
+

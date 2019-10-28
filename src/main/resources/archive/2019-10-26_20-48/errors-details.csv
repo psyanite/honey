@@ -1,0 +1,135 @@
+bangkok-bites-newtown;https://www.zomato.com/sydney/bangkok-bites-newtown;java.lang.ArrayIndexOutOfBoundsException: 1 Could not parse address: 273 King Street
+
+
+huong-huong-marrickville;https://www.zomato.com/sydney/huong-huong-marrickville;null Could not parse lat and lng from 
+
+
+ubud-kingsford;https://www.zomato.com/sydney/ubud-kingsford;java.lang.ArrayIndexOutOfBoundsException: 1 Could not parse address: 584 Anzac Parade
+
+
+memory-tongue-chatswood;https://www.zomato.com/sydney/memory-tongue-chatswood;java.lang.ArrayIndexOutOfBoundsException: -1 Could not parse address: Shop 66, Chatswood Interchange Chatswood, Chatswood, Sydney Chatswood NSW
+
+
+mamaks-village-darling-harbour;https://www.zomato.com/sydney/mamaks-village-darling-harbour;java.lang.ArrayIndexOutOfBoundsException: -1 Could not parse address: Level 2, Harbourside Shopping Centre, Darling Harbour, Sydney Darling Harbour NSW
+
+
+banh-cuon-kim-thanh-bankstown;https://www.zomato.com/sydney/banh-cuon-kim-thanh-bankstown;java.lang.ArrayIndexOutOfBoundsException: -1 Could not parse address: Shop 7, 313 Chapel Road South, Bankstown, Sydney Bankstown
+
+
+wooden-bowl-strathfield;https://www.zomato.com/sydney/wooden-bowl-strathfield;java.lang.ArrayIndexOutOfBoundsException: -1 Could not parse address: Shop 29, The Boulevarde, Strathfield, Sydney Strathfield
+
+
+ella-blues-by-chinta-ria-1-cbd;https://www.zomato.com/sydney/ella-blues-by-chinta-ria-1-cbd;java.lang.ArrayIndexOutOfBoundsException: -1 Could not parse address: L1-F2, 2 Chifley Square, CBD, Sydney CBD NSW
+
+
+the-northeast-restaurant-kingsford;https://www.zomato.com/sydney/the-northeast-restaurant-kingsford;java.lang.ArrayIndexOutOfBoundsException: 1 Could not parse address: 434 Anzac Parade
+
+
+biwon-strathfield;https://www.zomato.com/sydney/biwon-strathfield;java.lang.ArrayIndexOutOfBoundsException: -1 Could not parse address: L1, 22 The Boulevarde, Strathfield, Sydney Strathfield
+
+
+the-paradise-restaurant-mall-road;https://www.zomato.com/sydney/the-paradise-restaurant-mall-road;null Could not parse lat and lng from 
+
+
+golden-lotus-asian-cuisine-newington;https://www.zomato.com/sydney/golden-lotus-asian-cuisine-newington;java.lang.ArrayIndexOutOfBoundsException: -1 Could not parse address: Shop B4, 1 Avenue of Europe, Newington, Sydney Newington
+
+
+mekong-riverside-south-east-asian-cuisine-cabramatta;https://www.zomato.com/sydney/mekong-riverside-south-east-asian-cuisine-cabramatta;java.lang.ArrayIndexOutOfBoundsException: -1 Could not parse address: Cabramatta Road E. & Fairview Road Cabramatta
+
+
+city-makoto-sushi-train-cbd;https://www.zomato.com/sydney/city-makoto-sushi-train-cbd;java.lang.Exception: Response was not success, response code: 403 Toaster request failed
+
+
+mamak-haymarket;https://www.zomato.com/sydney/mamak-haymarket;java.lang.Exception: Response had errors Toaster request failed
+
+
+danjee-cbd;https://www.zomato.com/sydney/danjee-cbd;java.lang.ArrayIndexOutOfBoundsException: -1 Could not parse address: 1- 7 Albion Place Sydney NSW
+
+
+opera-kitchen-cbd;https://www.zomato.com/sydney/opera-kitchen-cbd;java.lang.ArrayIndexOutOfBoundsException: -1 Could not parse address: Lower Concourse Level, Sydney Opera House, CBD, Sydney CBD NSW
+
+
+bangkok-haymarket;https://www.zomato.com/sydney/bangkok-haymarket;java.lang.Exception: Response had errors Toaster request failed
+
+
+seaside-thai-gourmet-manly;https://www.zomato.com/sydney/seaside-thai-gourmet-manly;java.lang.ArrayIndexOutOfBoundsException: -1 Could not parse address: Level 1, 33 South Steyne, Manly, Sydney Manly
+
+
+sydney-tower-buffet-cbd;https://www.zomato.com/sydney/sydney-tower-buffet-cbd;java.lang.ArrayIndexOutOfBoundsException: -1 Could not parse address: Sydney Tower Dining, Level 4 Westfield Sydney, Between Pitt & Castlereagh Streets, Sydney NSW NSW
+
+
+tuk-chop-mascot;https://www.zomato.com/sydney/tuk-chop-mascot;java.lang.ArrayIndexOutOfBoundsException: -1 Could not parse address: T2 Domestic, near Gate 40, Sydney Airport, Sydney NSW
+
+
+huang-ue-cabramatta;https://www.zomato.com/sydney/huang-ue-cabramatta;java.lang.ArrayIndexOutOfBoundsException: -1 Could not parse address: Shop 12/47 Park Road Cabramatta 2161 Cabramatta
+
+
+mama-mulan-chatswood;https://www.zomato.com/sydney/mama-mulan-chatswood;java.lang.ArrayIndexOutOfBoundsException: -1 Could not parse address: The Concourse, Level 1 above Willoughby City Library, Chatswood NSW, Sydney Chatswood
+
+
+me-oi-strathfield;https://www.zomato.com/sydney/me-oi-strathfield;java.lang.ArrayIndexOutOfBoundsException: -1 Could not parse address: Shop 41, The Boulevarde, Strathfield, Sydney Strathfield NSW
+
+
+moim-japanese-kitchen-kirrawee;https://www.zomato.com/sydney/moim-japanese-kitchen-kirrawee;java.lang.ArrayIndexOutOfBoundsException: -1 Could not parse address: 134 Oak Road North
+
+
+sinma-laksa-house-kingsford;https://www.zomato.com/sydney/sinma-laksa-house-kingsford;java.lang.ArrayIndexOutOfBoundsException: 1 Could not parse address: 391 Anzac Parade
+
+
+yukis-at-the-quay-circular-quay;https://www.zomato.com/sydney/yukis-at-the-quay-circular-quay;java.lang.ArrayIndexOutOfBoundsException: -1 Could not parse address: Level 4, Overseas Passenger Terminal, West Circular Quay, The Rocks, Sydney Circular Quay NSW
+
+
+tokio-fans-baulkham-hills;https://www.zomato.com/sydney/tokio-fans-baulkham-hills;java.lang.ArrayIndexOutOfBoundsException: -1 Could not parse address: Shop G04, Building 8, Norwest Central, Century Circuit, Baulkham Hills, Sydney Baulkham Hills
+
+
+beauty-the-beast-korean-restaurant-strathfield;https://www.zomato.com/sydney/beauty-the-beast-korean-restaurant-strathfield;java.lang.ArrayIndexOutOfBoundsException: -1 Could not parse address: Shop 3, 39 The Boulevarde, Strathfield, Sydney Strathfield
+
+
+tomodachi-rhodes;https://www.zomato.com/sydney/tomodachi-rhodes;java.lang.ArrayIndexOutOfBoundsException: -1 Could not parse address: Shop 74, Level 1, Rhodes Waterside, 1 Rider Boulevard Rhodes
+
+
+Sushi-kaido-chatswood;https://www.zomato.com/sydney/Sushi-kaido-chatswood;java.lang.ArrayIndexOutOfBoundsException: -1 Could not parse address: Shop 7, 376 Victoria Avenue (Entrance via Anderson Street), Chatswood, Sydney Chatswood NSW
+
+
+cokco-chicken-grill-strathfield;https://www.zomato.com/sydney/cokco-chicken-grill-strathfield;java.lang.ArrayIndexOutOfBoundsException: -1 Could not parse address: Shop 28, 45-47 The Boulevarde, Strathfield, Sydney Strathfield
+
+
+tsuru-food-truck;https://www.zomato.com/sydney/tsuru-food-truck;null Could not parse lat and lng from 
+
+
+hicksonsizakaya;https://www.zomato.com/sydney/hicksonsizakaya;null Could not parse lat and lng from 
+
+
+eat-art-truck-food-truck;https://www.zomato.com/sydney/eat-art-truck-food-truck;null Could not parse lat and lng from 
+
+
+mr-zhong-bbq-house-bankstown;https://www.zomato.com/sydney/mr-zhong-bbq-house-bankstown;java.lang.ArrayIndexOutOfBoundsException: -1 Could not parse address: Shop 7, 316-324 Chapel Road South, Bankstown, Sydney Bankstown
+
+
+banana-blossom-brookvale;https://www.zomato.com/sydney/banana-blossom-brookvale;java.lang.ArrayIndexOutOfBoundsException: -1 Could not parse address: Kiosk 105, Ground Level, Warringah Mall, Brookvale, Sydney Brookvale NSW
+
+
+the-grandstand-sports-bar-and-function-centre-camperdown;https://www.zomato.com/sydney/the-grandstand-sports-bar-and-function-centre-camperdown;java.lang.ArrayIndexOutOfBoundsException: -1 Could not parse address: 1 Blackburn Circuit, The University of Sydney, Camperdown, Sydney Camperdown NSW
+
+
+seoul-dining-korean-bbq-hurstville;https://www.zomato.com/sydney/seoul-dining-korean-bbq-hurstville;java.lang.Exception: Response had errors Toaster request failed
+
+
+restaurant-plage-1-cremorne;https://www.zomato.com/sydney/restaurant-plage-1-cremorne;java.lang.ArrayIndexOutOfBoundsException: -1 Could not parse address: 8/255 Military road, NSW 2090, Cremorne, Sydney, Australia, Sydney Cremorne
+
+
+happy-gathering-restaurant-redfern;https://www.zomato.com/sydney/happy-gathering-restaurant-redfern;java.lang.ArrayIndexOutOfBoundsException: -1 Could not parse address: Club Redfern, 2/159 Redfern Street (Corner Gibbon Street), Redfern, Sydney Redfern
+
+
+yuzu-homaru-newington;https://www.zomato.com/sydney/yuzu-homaru-newington;java.lang.ArrayIndexOutOfBoundsException: -1 Could not parse address: Newington Marketplace, C7 Avenue Of Europe, Newington, Sydney Newington
+
+
+china-chilli-chatswood-interchange-chatswood;https://www.zomato.com/sydney/china-chilli-chatswood-interchange-chatswood;java.lang.ArrayIndexOutOfBoundsException: -1 Could not parse address: Shop 69, Level 3, Chatswood Interchange Chatswood, Chatswood, Sydney Chatswood
+
+
+ya-malaysia;https://www.zomato.com/sydney/ya-malaysia;null Could not parse lat and lng from 
+
+
+tasty-eating-house-kingsford;https://www.zomato.com/sydney/tasty-eating-house-kingsford;java.lang.ArrayIndexOutOfBoundsException: 1 Could not parse address: 480 Anzac Parade
+
+

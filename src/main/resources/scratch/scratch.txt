@@ -12,3 +12,19 @@
     farmCategory("desserts-bakes", "https://www.zomato.com/sydney/restaurants", Some("desserts-bakes=1"))
     farmCategory("bubble-tea", "https://www.zomato.com/sydney/restaurants/bubble-tea", None)
 
+
+//  private def doGetPage(path: String, queryOpt: Option[String], pageNumber: Int): Option[JValue] = {
+//    val pageParam = s"page=$pageNumber"
+//    val queryStr = queryOpt.map(query => s"${query}&${pageParam}").getOrElse(pageParam)
+//    val url = buildUrl(s"${path}?${queryStr}")
+//    doGet(url)
+//  }
+//
+//  private def doGetAllPages(path: String, query: Option[String]): Seq[JValue] = {
+//    val firstPage = doGetPage(path, query , 1)
+//    val totalPageCount = firstPage.flatMap(p => (p \ "pagination" \ "number_of_pages").extractOpt[Int]).getOrElse(0)
+//    println(s"Fetching ${totalPageCount} pages for $path ${query.getOrElse("")}")
+//
+//    val remainderPages = (2 to totalPageCount).flatMap(pageNumber => doGetPage(path, query, pageNumber))
+//    firstPage.toSeq ++ remainderPages
+//  }

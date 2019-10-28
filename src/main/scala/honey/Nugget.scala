@@ -17,7 +17,7 @@ class Nugget {
     Con = DriverManager.getConnection(url, username, password)
   }
 
-  private def insert(sql: String): Int = {
+  def insert(sql: String): Int = {
     try {
       val statement = Con.createStatement
       statement.executeUpdate(sql)

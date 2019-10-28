@@ -1,0 +1,89 @@
+bangkok-bites-newtown:::https://www.zomato.com/sydney/bangkok-bites-newtown:::java.lang.Exception: Run out of ideas Could not parse address: 273 King Street
+
+
+huong-huong-marrickville:::https://www.zomato.com/sydney/huong-huong-marrickville:::null Could not parse lat and lng from 
+
+
+ubud-kingsford:::https://www.zomato.com/sydney/ubud-kingsford:::java.lang.Exception: Run out of ideas Could not parse address: 584 Anzac Parade
+
+
+memory-tongue-chatswood:::https://www.zomato.com/sydney/memory-tongue-chatswood:::java.lang.Exception: Run out of ideas Could not parse address: Shop 66, Chatswood Interchange Chatswood, Chatswood, Sydney Chatswood NSW
+
+
+kushi-charcoal-skewer-buffet-bankstown:::https://www.zomato.com/sydney/kushi-charcoal-skewer-buffet-bankstown:::java.lang.Exception: Run out of ideas Could not parse address: Ground Floor, Little Saigon Plaza, 462 Chapel Road, Bankstown Bankstown
+
+
+mamaks-village-darling-harbour:::https://www.zomato.com/sydney/mamaks-village-darling-harbour:::java.lang.Exception: Run out of ideas Could not parse address: Level 2, Harbourside Shopping Centre, Darling Harbour, Sydney Darling Harbour NSW
+
+
+jiangnan-cbd:::https://www.zomato.com/sydney/jiangnan-cbd:::java.lang.Exception: Response had errors Toaster request failed: 
+
+mutation {
+  upsertStore(
+    zId: \"jiangnan-cbd\",
+    zUrl: \"https://www.zomato.com/sydney/jiangnan-cbd\",
+    name: \"Jiangnan 江南\",
+    phoneCountry: \"+61\",
+    phoneNumber: \"Not Available\",
+    coverImage: \"https://b.zmtcdn.com/data/reviews_photos/0e8/ae4d4d7be3399ffcaede1d61ddccf0e8_1567911947.jpg?resize=1204%3A1204&crop=1200%3A464%3B2%2C413\",
+    addressFirstLine: null,
+    addressSecondLine: null,
+    addressStreetNumber: \"57\",
+    addressStreetName: \"Liverpool Street\",
+    cuisines: \"Chinese,Asian\",
+    location: null,
+    suburb: \"CBD\",
+    city: \"Sydney\",
+    lat: -33.8763420000,
+    lng: 151.2051130000,
+    moreInfo: \"No Alcohol Available,Indoor Seating,Table Reservation Not Required,Parking available 274 metres away\",
+    avgCost: null,
+    hours: \"\"
+  ) {
+    id,
+    name,
+  }
+}, 
+
+Response: {
+  "errors": [
+    {
+      "message": "Could not upsert store: SequelizeDatabaseError: null value in column \"hours\" violates not-null constraint",
+      "locations": [
+        {
+          "line": 3,
+          "column": 3
+        }
+      ],
+      "path": [
+        "upsertStore"
+      ]
+    }
+  ],
+  "data": {
+    "upsertStore": null
+  }
+}
+
+
+infuzions-hornsby:::https://www.zomato.com/sydney/infuzions-hornsby:::java.lang.Exception: Run out of ideas Could not parse address: Level 2, Westfield Hornsby, 236 Pacific Highway, Hornsby, Sydney Hornsby
+
+
+new-tai-yuen-haymarket:::https://www.zomato.com/sydney/new-tai-yuen-haymarket:::java.lang.Exception: Run out of ideas Could not parse address: Shop 1, Level 1, 31-37 Dixon Street, Haymarket Haymarket NSW
+
+
+mama-laksa-house-cbd:::https://www.zomato.com/sydney/mama-laksa-house-cbd:::java.lang.Exception: Run out of ideas Could not parse address: Grace Hotel, Corner of York & King Streets, 77 York Street, CBD CBD
+
+
+mr-wu-dumpling-bar-glebe:::https://www.zomato.com/sydney/mr-wu-dumpling-bar-glebe:::java.lang.Exception: Run out of ideas Could not parse address: Level 2, Broadway, Glebe, Sydney Glebe
+
+
+charm-kitchen-miranda:::https://www.zomato.com/sydney/charm-kitchen-miranda:::java.lang.Exception: Run out of ideas Could not parse address: Level 3, Westfield Miranda, 600 Kingsway, Miranda Miranda
+
+
+house-of-canton-hornsby:::https://www.zomato.com/sydney/house-of-canton-hornsby:::java.lang.Exception: Run out of ideas Could not parse address: Shop 23B, Westfield Hornsby, 236 Pacific Highway, Hornsby, Sydney Hornsby NSW
+
+
+banh-cuon-kim-thanh-bankstown:::https://www.zomato.com/sydney/banh-cuon-kim-thanh-bankstown:::java.lang.Exception: Run out of ideas Could not parse address: Shop 7, 313 Chapel Road South, Bankstown, Sydney Bankstown
+
+
