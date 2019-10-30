@@ -7,7 +7,6 @@ object Toaster {
   def query(queryStr: String): HttpResponse[String] = {
     val query = queryStr.replaceAll("\n", """\\n""")
     val data = s"""{ "query": "$query" }"""
-//    println(data)
     Http("http://localhost:3000/graphql")
       .postData(data)
       .header("Authorization", "Bearer breadcat")

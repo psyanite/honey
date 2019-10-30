@@ -4,8 +4,9 @@ import java.io.{BufferedReader, File, FileReader}
 import java.nio.file.{Files, Paths}
 
 import net.liftweb.json.{DefaultFormats, _}
+import org.joda.time.LocalDateTime
+import org.joda.time.format.DateTimeFormat
 import org.jsoup.Jsoup
-import org.openqa.selenium.chrome.ChromeDriver
 import scalaj.http._
 
 import scala.jdk.CollectionConverters._
@@ -15,8 +16,20 @@ object Honey {
   implicit val formats: DefaultFormats.type = DefaultFormats
 
   def main(args: Array[String]): Unit = {
+    try {
+      start()
+    } catch {
+      case e: Exception => e.printStackTrace()
+    } finally {
+      Utils.declareComplete()
+    }
+  }
 
-    val summaryFile = Utils.createFile("logs", "summary", "summary")
+  def start(): Unit = {
+
+    val fmt  = DateTimeFormat.forPattern("yyyy-MM-dd_HH-mm")
+    val time = fmt.print(new LocalDateTime())
+    val summaryFile = Utils.createFile("logs", time, "summary")
 
     var successCount = 0
     var failCount = 0
@@ -129,22 +142,30 @@ object Honey {
       }
     }
 
-
     def processFile(file: File): Unit = {
-      val logFile = Utils.createFile("logs", file.getName,"log")
-      val errorDetailsFile = Utils.createFile("logs", file.getName, "errors-details")
-      val errorsFailedZidsFile = Utils.createFile("logs", file.getName, "errors-failed-zIds")
+      val logFile = Utils.createFile("logs", time,s"${file.getName}-log")
+      val errorDetailsFile = Utils.createFile("logs", time, s"${file.getName}-errors-details")
+      val errorsFailedZidsFile = Utils.createFile("logs", time, s"${file.getName}-errors-failed-zIds")
 
       def processStore(zId: String): Unit = {
-        println(s"Processing $zId\n")
+        println(s"\nProcess $zId")
         try {
-          parseZid(zId.toLowerCase)
-          logFile.write(s"$zId, https://www.zomato.com/sydney/$zId, success\n")
+          if (alreadySaved(zId)) {
+            println(s"Process $zId skipped")
+            logFile.write(s"$zId, https://www.zomato.com/sydney/$zId, skipped")
+          } else {
+            parseZid(zId)
+            println(s"Process $zId skipped")
+            logFile.write(s"$zId, https://www.zomato.com/sydney/$zId, success")
+          }
+          logFile.newLine()
           successCount += 1
         } catch {
           case e: Exception =>
             failCount += 1
+            println(s"Process $zId failed")
             logFile.write(s"$zId,https://www.zomato.com/sydney/$zId,fail")
+            logFile.newLine()
             errorDetailsFile.write(s"$zId;https://www.zomato.com/sydney/$zId;${e.getCause} ${e.getMessage}")
             errorDetailsFile.newLine()
             errorDetailsFile.newLine()
@@ -163,7 +184,7 @@ object Honey {
         zId = br.readLine
         zId != null
       }) {
-        if (zId.nonEmpty) processStore(zId)
+        if (zId.nonEmpty) processStore(zId.toLowerCase)
         lineCount += 1
         println(s"Processed $lineCount / $totalLineCount")
         val total = successCount + failCount
@@ -177,8 +198,6 @@ object Honey {
       errorDetailsFile.close()
       errorsFailedZidsFile.flush()
       errorsFailedZidsFile.close()
-      summaryFile.flush()
-      summaryFile.close()
     }
 
     println(
@@ -207,6 +226,8 @@ object Honey {
          |ZId Fail Count:    $failCount
          |""".stripMargin
     summaryFile.write(summary)
+    summaryFile.flush()
+    summaryFile.close()
 
     println(summary)
     println(
@@ -217,8 +238,6 @@ object Honey {
         |  / 　 づ  / 　 づ  / 　 づ
         |============================
         |""".stripMargin)
-
-    Utils.declareComplete()
   }
 
   val ValidStreetSuffixes = "Road" :: "Street" :: "Way" :: "Avenue" :: "Avenue" :: "Drive" :: "Lane" :: "Place" ::
@@ -327,5 +346,24 @@ object Honey {
             throw new Exception(s"Could not parse address: $string", e)
         }
     }
+  }
+
+  private def alreadySaved(zId: String): Boolean = {
+    val query = {
+      s"""
+         |query {
+         |  storeByZid(zid: \\"$zId\\") {
+         |    z_id
+         |  }
+         |}""".stripMargin
+    }
+
+    val response = Toaster.query(query)
+
+    if (!response.isSuccess) return false
+
+    val body = parse(response.body)
+    val savedZid = (body \ "data" \ "storeByZid" \ "z_id").extractOpt[String] getOrElse ""
+    zId == savedZid
   }
 }
