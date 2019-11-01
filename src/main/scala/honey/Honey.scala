@@ -27,9 +27,10 @@ object Honey {
 
   def start(): Unit = {
 
-    val fmt  = DateTimeFormat.forPattern("yyyy-MM-dd_HH-mm")
+    val fmt = DateTimeFormat.forPattern("yyyy-MM-dd_HH-mm")
     val time = fmt.print(new LocalDateTime())
     val summaryFile = Utils.createFile("logs", time, "summary")
+    val failedAddrFile = Utils.createFile("logs", time, "failed-addr-stores")
 
     var successCount = 0
     var failCount = 0
@@ -88,11 +89,47 @@ object Honey {
         }).mkString("$$$")
       }
 
-      val addressStr = Option(doc.select("div.resinfo-icon span").text()) getOrElse ""
-      val addr = getAddress(addressStr)
+      val addressStr = Option(doc.select("div.resinfo-ico n span").text()) getOrElse ""
+      val addr = try {
+        AddressUtils.getAddress(addressStr)
+      } catch {
+        case e: Exception =>
+          val mutation = {
+            s"""
+               |mutation {
+               |  upsertStore(
+               |    zId: ${a(zId)},
+               |    zUrl: ${a(zUrl)},
+               |    name: ${a(name)},
+               |    phoneCountry: \\"+61\\",
+               |    phoneNumber: ${a(phone)},
+               |    coverImage: ${a(coverImage)},
+               |    addressFirstLine: :line1:,
+               |    addressSecondLine: :line2:,
+               |    addressStreetNumber: :streetNumber:,
+               |    addressStreetName: :streetName:,
+               |    cuisines: "${a(cuisines)}",
+               |    location: null,
+               |    suburb: :suburb:,
+               |    city: \\"Sydney\\",
+               |    lat: $lat,
+               |    lng: $lng,
+               |    moreInfo: ${a(moreInfo)},
+               |    avgCost: $avgCost,
+               |    hours: ${a(hours.toString)}
+               |  ) {
+               |    id,
+               |    name,
+               |  }
+               |}""".stripMargin
+          }
+          val stripped = mutation.replaceAllLiterally("\n", "")
+          failedAddrFile.write(s"$zId~~~$addressStr~~~$stripped")
+          failedAddrFile.newLine()
+          throw e
+      }
 
       val mutation = {
-        def a(s: String): String = if (s == "null") s else s"""\\"$s\\""""
         s"""
            |mutation {
            |  upsertStore(
@@ -143,7 +180,7 @@ object Honey {
     }
 
     def processFile(file: File): Unit = {
-      val logFile = Utils.createFile("logs", time,s"${file.getName}-log")
+      val logFile = Utils.createFile("logs", time, s"${file.getName}-log")
       val errorDetailsFile = Utils.createFile("logs", time, s"${file.getName}-errors-details")
       val errorsFailedZidsFile = Utils.createFile("logs", time, s"${file.getName}-errors-failed-zIds")
 
@@ -210,7 +247,7 @@ object Honey {
         |============================
         |""".stripMargin)
 
-    val dir = "farm/test"
+    val dir = "farm-input/test"
     val files = Utils.getFiles(dir)
 
     files.foreach(processFile)
@@ -229,6 +266,9 @@ object Honey {
     summaryFile.flush()
     summaryFile.close()
 
+    failedAddrFile.flush()
+    failedAddrFile.close()
+
     println(summary)
     println(
       """============================
@@ -238,114 +278,6 @@ object Honey {
         |  / 　 づ  / 　 づ  / 　 づ
         |============================
         |""".stripMargin)
-  }
-
-  val ValidStreetSuffixes = "Road" :: "Street" :: "Way" :: "Avenue" :: "Avenue" :: "Drive" :: "Lane" :: "Place" ::
-      "Crescent" :: "Court" :: "Boulevard" :: "Rd" :: "Ave" :: "Kingsway" :: "Walk" :: "Plaza" :: "Parade" ::
-      "Road South" :: "Road North" :: "Broadway" :: "Highway" :: "Street" :: "St" :: "Dr" :: "street" :: "Roads" ::
-      "Avenue of Europe" :: "Ln" :: "Promenade" :: "Street East" :: "Parkway" :: "Terrace" :: Nil
-
-  private def hasValidSuffix(s: String) = s.endsWith(ValidStreetSuffixes)
-
-  case class Address(line1: String, line2: String, streetNumber: String, streetName: String, suburb: String)
-
-  private def getAddress(input: String): Address = {
-    val string = input.replaceAll("\\(.*?\\)","")
-    val allParts = string.split(", ")
-
-    def getStreetDeets(sLine: String): (String, String) = {
-      if (sLine.charAt(0).isDigit) {
-        val sParts = sLine.split(" ")
-        if (sParts.length == 1) ("null", sParts(0))
-        else if (sParts.length > 1) (sParts(0), sParts.tail.mkString(" "))
-        else throw new Exception(s"Could not parse street line: $sLine")
-      } else {
-        ("null", sLine)
-      }
-  }
-
-    def parseFullAddress(): Address = {
-      val sydneyPartIdx = allParts.indexWhere(_.startsWith("Sydney"))
-      if (sydneyPartIdx < 0) throw new Exception(s"Could not find Sydney index: $string")
-      val b = allParts.slice(0, sydneyPartIdx)
-      if (b.length < 2) throw new Exception(s"Address has insufficient parts: $string")
-      val suburb = b(b.length - 1)
-
-      val streetIdx = {
-        val kiwi = b.indexWhere(p => p.charAt(0).isDigit && hasValidSuffix(p))
-        if (kiwi >= 0) kiwi else b.indexWhere(p => hasValidSuffix(p))
-      }
-      val c = b.slice(0, streetIdx)
-      val (streetNumber, streetName) = {
-        val sLine = b(streetIdx)
-        getStreetDeets(sLine)
-      }
-      val line2 = if (c.length >= 1) b(1) else "null"
-      val line1 = if (c.length >= 2) b(0) else "null"
-
-      Address(line1, line2, streetNumber, streetName, suburb)
-    }
-
-    def parseTwoPartAddress(): Address = {
-      val (streetNumber, streetName) = getStreetDeets(allParts(0))
-      val suburb = allParts(1)
-      Address(null, null, streetNumber, streetName, suburb)
-    }
-
-    def parseThreePartAddress(): Address = {
-      val (streetNumber, streetName) = getStreetDeets(allParts(0))
-      val suburb = {
-        val kiwi = allParts.drop(1).filterNot(s => s == "Sydney").headOption
-        if (kiwi.isEmpty) throw new Exception("Could not find suburb")
-        kiwi.get
-      }
-      Address(null, null, streetNumber, streetName, suburb)
-    }
-
-    def parseOnePartAddress(): Address = {
-      if (hasValidSuffix(string)) {
-        val (streetNumber, streetName) = getStreetDeets(allParts(0))
-        Address(null, null, streetNumber, streetName, "Sydney")
-      } else {
-        val sParts = string.split(" ")
-        val sLine = sParts.drop(1).mkString(" ")
-        val suburb = sParts.dropRight(1).mkString(" ")
-        if (!hasValidSuffix(sLine)) throw new Exception("Could not parse one part address")
-        val (streetNumber, streetName) = getStreetDeets(sLine)
-        Address(null, null, streetNumber, streetName, suburb)
-      }
-    }
-
-    def parseByStreetAddress(): Address = {
-      val streetIdx = {
-        val kiwi = allParts.indexWhere(p => p.charAt(0).isDigit && hasValidSuffix(p))
-        if (kiwi >= 0) kiwi else allParts.indexWhere(p => hasValidSuffix(p))
-      }
-      val c = allParts.slice(0, streetIdx)
-      val (streetNumber, streetName) = {
-        val sLine = allParts(streetIdx)
-        getStreetDeets(sLine)
-      }
-      val suburb = allParts(streetIdx + 1)
-      val line2 = if (c.length >= 1) allParts(1) else "null"
-      val line1 = if (c.length >= 2) allParts(0) else "null"
-      Address(line1, line2, streetNumber, streetName, suburb)
-    }
-
-    try {
-      parseFullAddress()
-    } catch {
-      case _: Exception =>
-        try {
-          if (allParts.size == 2) parseTwoPartAddress()
-          else if (allParts.size == 3) parseThreePartAddress()
-          else if (allParts.size == 1) parseOnePartAddress()
-          else parseByStreetAddress()
-        } catch {
-          case e: Exception =>
-            throw new Exception(s"Could not parse address: $string", e)
-        }
-    }
   }
 
   private def alreadySaved(zId: String): Boolean = {
@@ -366,4 +298,6 @@ object Honey {
     val savedZid = (body \ "data" \ "storeByZid" \ "z_id").extractOpt[String] getOrElse ""
     zId == savedZid
   }
+
+  private def a(s: String): String = if (s == "null") s else s"""\\"$s\\""""
 }

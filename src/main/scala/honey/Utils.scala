@@ -33,7 +33,7 @@ object Utils {
         .asString
   }
 
-  def declareComplete() = {
+  def declareComplete(): Unit = {
     System.setProperty("webdriver.chrome.driver", "C:\\Apps\\chrome\\chromedriver.exe")
     val chrome = new ChromeDriver()
     chrome.get("https://www.youtube.com/watch?v=CDW3dqfCW7c")

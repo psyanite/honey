@@ -25,7 +25,7 @@ object FarmPages {
 
   private def farmCategory(pageName: String, url: String, queryOpt: Option[String]): Unit = {
 
-    val bw = Utils.createFile("farm", pageName, pageName)
+    val bw = Utils.createFile("farm-input", pageName, pageName)
 
     def parse(s: String): Unit = {
       val doc = Jsoup.parse(s)
