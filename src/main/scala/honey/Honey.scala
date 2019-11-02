@@ -108,7 +108,7 @@ object Honey {
                |    addressSecondLine: :line2:,
                |    addressStreetNumber: :streetNumber:,
                |    addressStreetName: :streetName:,
-               |    cuisines: "${a(cuisines)}",
+               |    cuisines: ${a(cuisines)},
                |    location: null,
                |    suburb: :suburb:,
                |    city: \\"Sydney\\",

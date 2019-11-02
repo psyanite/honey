@@ -5,8 +5,7 @@ import scalaj.http.{Http, HttpResponse}
 object Toaster {
 
   def query(queryStr: String): HttpResponse[String] = {
-    val query = queryStr.replaceAll("\n", """\\n""")
-    val data = s"""{ "query": "$query" }"""
+    val data = s"""{ "query": "$queryStr" }"""
     Http("http://localhost:3000/graphql")
       .postData(data)
       .header("Authorization", "Bearer breadcat")
