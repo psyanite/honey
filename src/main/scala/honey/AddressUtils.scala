@@ -61,11 +61,25 @@ object AddressUtils {
         Address(null, null, streetNumber, streetName, "Sydney")
       } else {
         val sParts = string.split(" ")
-        val sLine = sParts.drop(1).mkString(" ")
-        val suburb = sParts.dropRight(1).mkString(" ")
-        if (!hasValidSuffix(sLine)) throw new Exception("Could not parse one part address")
-        val (streetNumber, streetName) = getStreetDeets(sLine)
-        Address(null, null, streetNumber, streetName, suburb)
+        try {
+          val sLine = sParts.drop(1).mkString(" ")
+          val suburb = sParts.dropRight(1).mkString(" ")
+          if (!hasValidSuffix(sLine)) throw new Exception("Could not parse one part address")
+          val (streetNumber, streetName) = getStreetDeets(sLine)
+          Address(null, null, streetNumber, streetName, suburb)
+        } catch {
+          case _: Exception =>
+            val suffixIdx = sParts.indexWhere(s => hasValidSuffix(s))
+            if (suffixIdx < 0) throw new Exception("Could not find word with valid suffix")
+            val sLine = sParts.slice(0, suffixIdx + 1).mkString(" ")
+            val suburb = try {
+              sParts(suffixIdx + 1)
+            } catch {
+              case _: Exception => "Sydney"
+            }
+            val (streetNumber, streetName) = getStreetDeets(sLine)
+            Address(null, null, streetNumber, streetName, suburb)
+        }
       }
     }
 
@@ -115,12 +129,11 @@ object AddressUtils {
 
   val ValidStreetSuffixes = "Road" :: "Street" :: "Way" :: "Avenue" :: "Avenue" :: "Drive" :: "Lane" :: "Place" ::
       "Crescent" :: "Court" :: "Boulevard" :: "Rd" :: "Ave" :: "Kingsway" :: "Walk" :: "Plaza" :: "Parade" ::
-      "Road South" :: "Road North" :: "Broadway" :: "Highway" :: "Street" :: "St" :: "Dr" :: "street" :: "Roads" ::
+      "Road South" :: "Road North" :: "Broadway" :: "Highway" :: "St" :: "Dr" :: "street" :: "Roads" ::
       "Avenue of Europe" :: "Ln" :: "Promenade" :: "Street East" :: "Parkway" :: "Terrace" :: Nil
 
   private def hasValidSuffix(s: String): Boolean = {
-    val lastWord = s.split(" ").lastOption.getOrElse("")
-    ValidStreetSuffixes.contains(lastWord)
+    ValidStreetSuffixes.exists(suffix => s.endsWith(suffix))
   }
 
   case class Address(line1: String, line2: String, streetNumber: String, streetName: String, suburb: String)

@@ -53,7 +53,7 @@ object Honey {
       if (closedText != null && closedText.contains("Permanently closed")) return
 
       val coverImage = doc.select("div#progressive_image").attr("data-url")
-      val cuisines = doc.select("div.res-info-cuisines a").eachText().asScala.mkString(",")
+      val cuisines = doc.select("div.res-info-cuisines a").eachText().asScala.toSet.mkString(",")
       val moreInfo = doc.select("div.res-info-feature-text").eachText().asScala.mkString(",")
 
       val phone = {
